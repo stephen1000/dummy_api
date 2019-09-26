@@ -1,0 +1,61 @@
+openapi: 3.0.0
+info:
+  title: Cat Facts API
+  description: Looks like an API, but doesn't think, do, or say anything useful.
+  version: 0.1.1
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+
+security:
+  - ApiKeyAuth: []
+
+servers:
+  - url: http://127.0.0.1:5000/
+    description: Should point to Azure
+
+paths:
+  /:
+    get:
+      summary: Opens an HTML version of the API with a fancy-schamncy form for doing the post request
+      responses:
+        "200":
+          description: OK
+          content:
+            text/html:
+              schema:
+                type: string
+                example: <h1>title!</h1><form>a cool form for submitting thie api data </form>
+    post:
+      summary: Grants access to secret cat knowledge that I didn't just grab off a random website somewhere.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  fact:
+                    type: string
+                    description: A valuable cat fact.
+                    example: Cats are sentient, but choose not to speak to us.
+            text/html:
+              schema:
+                type: string
+                example: <img src="static/cat_picture.png" /><p>Cats are sentient, but choose not to speak to us.</p>
+
+        "400":
+          description: Bad request. Make sure your method is valid.
+        "401":
+          description: Unauthorized. Check that your authentication method is valid.
+        "403":
+          description: Forbidden. This knowledge is too much for you.
+        "404":
+          description: Not found. Make sure your path.
+        "5XX":
+          description: Unexpected error. This has been noted by the cat lord.
